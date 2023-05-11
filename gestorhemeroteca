@@ -1,0 +1,96 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class GestorPrensa {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Publicacion> publicaciones = new ArrayList<>();
+        int opcion;
+
+        do {
+            System.out.println("--------GESTOR DE PRENSA--------");
+            System.out.println("1. Añadir revista");
+            System.out.println("2. Añadir periódico");
+            System.out.println("3. Ver publicaciones");
+            System.out.println("4. Salir");
+            System.out.print("Elige una opción: ");
+            opcion = sc.nextInt();
+            sc.nextLine(); // Consumimos el salto de línea del buffer
+
+            switch (opcion) {
+                case 1:
+                    System.out.print("Introduce el título de la revista: ");
+                    String tituloRevista = sc.nextLine();
+                    System.out.print("Introduce la periodicidad de la revista: ");
+                    String periodicidadRevista = sc.nextLine();
+                    System.out.print("Introduce el número de páginas de la revista: ");
+                    int numPaginasRevista = sc.nextInt();
+                    publicaciones.add(new Revista(tituloRevista, periodicidadRevista, numPaginasRevista));
+                    System.out.println("Revista añadida correctamente.");
+                    break;
+                case 2:
+                    System.out.print("Introduce el título del periódico: ");
+                    String tituloPeriodico = sc.nextLine();
+                    System.out.print("Introduce el número de páginas del periódico: ");
+                    int numPaginasPeriodico = sc.nextInt();
+                    publicaciones.add(new Periodico(tituloPeriodico, numPaginasPeriodico));
+                    System.out.println("Periódico añadido correctamente.");
+                    break;
+                case 3:
+                    System.out.println("LISTA DE PUBLICACIONES");
+                    for (Publicacion publicacion : publicaciones) {
+                        System.out.println(publicacion);
+                    }
+                    break;
+                case 4:
+                    System.out.println("Hasta pronto!");
+                    break;
+                default:
+                    System.out.println("Opción incorrecta.");
+            }
+
+        } while (opcion != 4);
+    }
+}
+
+class Publicacion {
+    protected String titulo;
+    protected int numPaginas;
+
+    public Publicacion(String titulo, int numPaginas) {
+        this.titulo = titulo;
+        this.numPaginas = numPaginas;
+    }
+
+    @Override
+    public String toString() {
+        return "Título: " + titulo + ", Número de páginas: " + numPaginas;
+    }
+}
+
+class Revista extends Publicacion {
+    private String periodicidad;
+
+    public Revista(String titulo, String periodicidad, int numPaginas) {
+        super(titulo, numPaginas);
+        this.periodicidad = periodicidad;
+    }
+
+    @Override
+    public String toString() {
+        return "Revista: " + super.toString() + ", Periodicidad: " + periodicidad;
+    }
+}
+
+class Periodico extends Publicacion {
+
+    public Periodico(String titulo, int numPaginas) {
+        super(titulo, numPaginas);
+    }
+
+    @Override
+    public String toString() {
+        return "Periódico: " + super.toString();
+    }
+}
